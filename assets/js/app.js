@@ -1,18 +1,45 @@
-console.log("Website Loaded Successfully");
+/* WEBSITE LOADED */
+
 console.log("E-Commerce Website Loaded");
-const hamburger = document.querySelector(".hamburger");
-const navLinks = document.querySelector(".nav-links");
 
-hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-});
-/* SELECT ELEMENTS */
+/* =========================
+   MOBILE NAVIGATION
+========================= */
 
-const productGrid = document.querySelector(".product-grid");
-const loading = document.querySelector(".loading");
-const errorMessage = document.querySelector(".error-message");
+const hamburger =
+document.querySelector(".hamburger");
 
-/* FETCH PRODUCTS */
+const navLinks =
+document.querySelector(".nav-links");
+
+/* TOGGLE MENU */
+
+if(hamburger){
+
+    hamburger.addEventListener("click", () => {
+
+        navLinks.classList.toggle("active");
+
+    });
+
+}
+
+/* =========================
+   SELECT ELEMENTS
+========================= */
+
+const productGrid =
+document.querySelector(".product-grid");
+
+const loading =
+document.querySelector(".loading");
+
+const errorMessage =
+document.querySelector(".error-message");
+
+/* =========================
+   FETCH PRODUCTS
+========================= */
 
 async function fetchProducts(){
 
@@ -22,21 +49,27 @@ async function fetchProducts(){
 
         loading.style.display = "block";
 
-        /* API REQUEST */
+        /* FETCH API */
 
         const response = await fetch(
             "https://fakestoreapi.com/products"
         );
 
-        /* CHECK ERROR */
+        /* CHECK RESPONSE */
 
         if(!response.ok){
-            throw new Error("Failed to fetch products");
+
+            throw new Error(
+                "Failed to fetch products"
+            );
         }
 
         /* CONVERT TO JSON */
 
-        const products = await response.json();
+        const products =
+        await response.json();
+
+        console.log(products);
 
         /* HIDE LOADING */
 
@@ -50,56 +83,82 @@ async function fetchProducts(){
 
     catch(error){
 
+        console.log(error);
+
         loading.style.display = "none";
 
         errorMessage.textContent =
-        "Unable to load products. Please try again later.";
-
-        console.log(error);
+        "Unable to load products.";
     }
 }
 
-/* DISPLAY PRODUCTS */
+/* =========================
+   DISPLAY PRODUCTS
+========================= */
 
 function displayProducts(products){
 
     products.forEach(product => {
 
-        const productCard = document.createElement("div");
+        /* CREATE LINK */
 
-        productCard.classList.add("product-card");
+        const productLink =
+        document.createElement("a");
 
-        productCard.innerHTML = `
+        /* PRODUCT URL */
 
-            <img 
-                src="${product.image}" 
-                alt="${product.title}"
-                loading="lazy"
-            >
+        productLink.href =
+        `product.html?id=${product.id}`;
 
-            <div class="product-info">
+        /* ADD CLASS */
 
-                <h3 class="product-title">
-                    ${product.title}
-                </h3>
+        productLink.classList.add(
+            "product-link"
+        );
 
-                <p class="product-price">
-                    $${product.price}
-                </p>
+        /* PRODUCT CARD */
 
-                <button class="product-btn">
-                    Add to Cart
-                </button>
+        productLink.innerHTML = `
+
+            <div class="product-card">
+
+                <img
+                    src="${product.image}"
+                    alt="${product.title}"
+                    loading="lazy"
+                >
+
+                <div class="product-info">
+
+                    <h3 class="product-title">
+                        ${product.title}
+                    </h3>
+
+                    <p class="product-price">
+                        $${product.price}
+                    </p>
+
+                    <button class="product-btn">
+                        View Product
+                    </button>
+
+                </div>
 
             </div>
 
         `;
 
-        productGrid.appendChild(productCard);
+        /* APPEND */
+
+        productGrid.appendChild(
+            productLink
+        );
 
     });
 }
 
-/* CALL FUNCTION */
+/* =========================
+   INITIALIZE
+========================= */
 
 fetchProducts();
