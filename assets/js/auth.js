@@ -1,3 +1,22 @@
+/* IMPORT AUTH */
+
+import { auth }
+from "./firebase.js";
+
+import {
+
+    createUserWithEmailAndPassword,
+
+    signInWithEmailAndPassword,
+
+    signOut,
+
+    onAuthStateChanged
+
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 /* PASSWORD TOGGLE */
 
 const toggleButtons =
@@ -126,7 +145,30 @@ function validateSignup(){
         return;
     }
 
+    /* FIREBASE SIGNUP */
+
+createUserWithEmailAndPassword(
+
+    auth,
+
+    email.value,
+
+    password.value
+
+)
+
+.then(() => {
+
     alert("Signup Successful!");
+
+    window.location.href =
+    "login.html";
+})
+
+.catch((error) => {
+
+    alert(error.message);
+});
 }
 
 /* LOGIN VALIDATION */
@@ -153,7 +195,30 @@ function validateLogin(){
         return;
     }
 
+    /* FIREBASE LOGIN */
+
+signInWithEmailAndPassword(
+
+    auth,
+
+    email.value,
+
+    password.value
+
+)
+
+.then(() => {
+
     alert("Login Successful!");
+
+    window.location.href =
+    "index.html";
+})
+
+.catch((error) => {
+
+    alert(error.message);
+});
 }
 
 /* PASSWORD STRENGTH */
@@ -193,3 +258,22 @@ if(signupPassword){
         }
     });
 }
+/* AUTH STATE */
+
+onAuthStateChanged(auth, (user) => {
+
+    if(user){
+
+        console.log(
+            "User Logged In:",
+            user.email
+        );
+    }
+
+    else{
+
+        console.log(
+            "No User Logged In"
+        );
+    }
+});
