@@ -110,19 +110,124 @@ function displayProduct(product) {
 
 function addToCart(id) {
 
-    let cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
+    /* GET EXISTING CART */
 
-    cart.push(id);
+    let cart =
+        JSON.parse(localStorage.getItem("cart"))
+        || [];
+
+    /* GET SELECTED OPTIONS */
+
+    const size =
+        document.querySelector("#size").value;
+
+    const color =
+        document.querySelector("#color").value;
+
+    const productTitle =
+        document.querySelector(".product-detail-info h1")
+            .textContent;
+
+    const productPrice =
+        currentPrice;
+
+    const productImage =
+        document.querySelector(".product-image img")
+            .src;
+
+    /* CHECK QUANTITY */
+
+    if (quantity < 1) {
+
+        alert("Invalid quantity");
+
+        return;
+    }
+
+    /* CHECK IF PRODUCT EXISTS */
+
+    const existingProduct =
+        cart.find(item =>
+
+            item.id === id &&
+            item.size === size &&
+            item.color === color
+        );
+
+    /* IF EXISTS */
+
+    if (existingProduct) {
+
+        existingProduct.quantity += quantity;
+    }
+
+    /* NEW PRODUCT */
+
+    else {
+
+        const cartItem = {
+
+            id: id,
+
+            title: productTitle,
+
+            price: productPrice,
+
+            image: productImage,
+
+            size: size,
+
+            color: color,
+
+            quantity: quantity
+        };
+
+        cart.push(cartItem);
+    }
+
+    /* SAVE TO LOCAL STORAGE */
 
     localStorage.setItem(
         "cart",
         JSON.stringify(cart)
     );
 
+    /* UPDATE COUNT */
+
     updateCartCount();
 
-    alert("Product Added To Cart");
+    /* SUCCESS MESSAGE */
+
+    showNotification(
+        "Item added to cart!"
+    );
+
+    console.log(cart);
+}
+/* NOTIFICATION */
+
+function showNotification(message) {
+
+    const notification =
+        document.createElement("div");
+
+    notification.classList.add(
+        "notification"
+    );
+
+    notification.textContent = message;
+
+    document.body.appendChild(
+        notification
+    );
+
+    /* REMOVE AFTER 3 SECONDS */
+
+    setTimeout(() => {
+
+        notification.remove();
+
+    }, 3000);
 }
 
 /* UPDATE CART COUNT */

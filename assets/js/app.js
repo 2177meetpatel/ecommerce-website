@@ -7,14 +7,14 @@ console.log("E-Commerce Website Loaded");
 ========================= */
 
 const hamburger =
-document.querySelector(".hamburger");
+    document.querySelector(".hamburger");
 
 const navLinks =
-document.querySelector(".nav-links");
+    document.querySelector(".nav-links");
 
 /* TOGGLE MENU */
 
-if(hamburger){
+if (hamburger) {
 
     hamburger.addEventListener("click", () => {
 
@@ -29,21 +29,21 @@ if(hamburger){
 ========================= */
 
 const productGrid =
-document.querySelector(".product-grid");
+    document.querySelector(".product-grid");
 
 const loading =
-document.querySelector(".loading");
+    document.querySelector(".loading");
 
 const errorMessage =
-document.querySelector(".error-message");
+    document.querySelector(".error-message");
 
 /* =========================
    FETCH PRODUCTS
 ========================= */
 
-async function fetchProducts(){
+async function fetchProducts() {
 
-    try{
+    try {
 
         /* SHOW LOADING */
 
@@ -57,7 +57,7 @@ async function fetchProducts(){
 
         /* CHECK RESPONSE */
 
-        if(!response.ok){
+        if (!response.ok) {
 
             throw new Error(
                 "Failed to fetch products"
@@ -67,7 +67,7 @@ async function fetchProducts(){
         /* CONVERT TO JSON */
 
         const products =
-        await response.json();
+            await response.json();
 
         console.log(products);
 
@@ -81,14 +81,14 @@ async function fetchProducts(){
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.log(error);
 
         loading.style.display = "none";
 
         errorMessage.textContent =
-        "Unable to load products.";
+            "Unable to load products.";
     }
 }
 
@@ -96,19 +96,19 @@ async function fetchProducts(){
    DISPLAY PRODUCTS
 ========================= */
 
-function displayProducts(products){
+function displayProducts(products) {
 
     products.forEach(product => {
 
         /* CREATE LINK */
 
         const productLink =
-        document.createElement("a");
+            document.createElement("a");
 
         /* PRODUCT URL */
 
         productLink.href =
-        `product.html?id=${product.id}`;
+            `product.html?id=${product.id}`;
 
         /* ADD CLASS */
 
