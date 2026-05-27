@@ -339,3 +339,20 @@ body{
         font-size: 32px;
     }
 }
+/* LOADING MESSAGE */
+
+.loading{
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: black;
+}
+
+/* ERROR MESSAGE */
+
+.error-message{
+    text-align: center;
+    color: red;
+    font-size: 20px;
+    margin-bottom: 20px;
+}

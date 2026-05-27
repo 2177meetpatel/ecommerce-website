@@ -6,48 +6,100 @@ const navLinks = document.querySelector(".nav-links");
 hamburger.addEventListener("click", () => {
     navLinks.classList.toggle("active");
 });
-/* FETCH PRODUCTS */
+/* SELECT ELEMENTS */
 
 const productGrid = document.querySelector(".product-grid");
+const loading = document.querySelector(".loading");
+const errorMessage = document.querySelector(".error-message");
 
-/* API CALL */
+/* FETCH PRODUCTS */
 
-fetch("https://fakestoreapi.com/products")
-    .then(response => response.json())
-    .then(data => {
+async function fetchProducts(){
 
-        data.forEach(product => {
+    try{
 
-            productGrid.innerHTML += `
+        /* SHOW LOADING */
 
-                <div class="product-card">
+        loading.style.display = "block";
 
-                    <img src="${product.image}" 
-                    alt="${product.title}"
-                    loading="lazy">
+        /* API REQUEST */
 
-                    <div class="product-info">
+        const response = await fetch(
+            "https://fakestoreapi.com/products"
+        );
 
-                        <h3 class="product-title">
-                            ${product.title}
-                        </h3>
+        /* CHECK ERROR */
 
-                        <p class="product-price">
-                            $${product.price}
-                        </p>
+        if(!response.ok){
+            throw new Error("Failed to fetch products");
+        }
 
-                        <button class="product-btn">
-                            Add to Cart
-                        </button>
+        /* CONVERT TO JSON */
 
-                    </div>
+        const products = await response.json();
 
-                </div>
+        /* HIDE LOADING */
 
-            `;
-        });
+        loading.style.display = "none";
 
-    })
-    .catch(error => {
-        console.log("Error fetching products:", error);
+        /* DISPLAY PRODUCTS */
+
+        displayProducts(products);
+
+    }
+
+    catch(error){
+
+        loading.style.display = "none";
+
+        errorMessage.textContent =
+        "Unable to load products. Please try again later.";
+
+        console.log(error);
+    }
+}
+
+/* DISPLAY PRODUCTS */
+
+function displayProducts(products){
+
+    products.forEach(product => {
+
+        const productCard = document.createElement("div");
+
+        productCard.classList.add("product-card");
+
+        productCard.innerHTML = `
+
+            <img 
+                src="${product.image}" 
+                alt="${product.title}"
+                loading="lazy"
+            >
+
+            <div class="product-info">
+
+                <h3 class="product-title">
+                    ${product.title}
+                </h3>
+
+                <p class="product-price">
+                    $${product.price}
+                </p>
+
+                <button class="product-btn">
+                    Add to Cart
+                </button>
+
+            </div>
+
+        `;
+
+        productGrid.appendChild(productCard);
+
     });
+}
+
+/* CALL FUNCTION */
+
+fetchProducts();

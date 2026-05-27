@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,84 +9,96 @@
     <!-- CSS FILE -->
     <link rel="stylesheet" href="./assets/css/main.css">
 </head>
+
 <body>
     <header class="header">
 
-    <!-- Logo -->
-    <div class="logo">
-        ShopEase
-    </div>
-
-    <!-- Navigation Menu -->
-    <nav class="navbar">
-        <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Products</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </nav>
-
-    <!-- Right Side -->
-    <div class="header-right">
-
-        <!-- Search Bar -->
-        <input type="text" placeholder="Search products..." class="search-bar">
-
-        <!-- Cart -->
-        <div class="cart">
-            🛒
-            <span class="cart-count">0</span>
+        <!-- Logo -->
+        <div class="logo">
+            ShopEase
         </div>
 
-        <!-- Hamburger Menu -->
-        <div class="hamburger">
-            ☰
+        <!-- Navigation Menu -->
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Right Side -->
+        <div class="header-right">
+
+            <!-- Search Bar -->
+            <input type="text" placeholder="Search products..." class="search-bar">
+
+            <!-- Cart -->
+            <div class="cart">
+                🛒
+                <span class="cart-count">0</span>
+            </div>
+
+            <!-- Hamburger Menu -->
+            <div class="hamburger">
+                ☰
+            </div>
+
         </div>
 
-    </div>
+    </header>
+    <!-- HERO SECTION -->
 
-</header>
-<!-- HERO SECTION -->
+    <section class="hero">
 
-<section class="hero">
+        <div class="hero-content">
 
-    <div class="hero-content">
+            <h1>Biggest Sale of the Year!</h1>
 
-        <h1>Biggest Sale of the Year!</h1>
+            <p>
+                Discover the latest fashion trends and premium products
+                at unbeatable prices.
+            </p>
 
-        <p>
-            Discover the latest fashion trends and premium products
-            at unbeatable prices.
-        </p>
+            <a href="#products">
+                <button class="hero-btn">
+                    Shop Now
+                </button>
+            </a>
 
-        <a href="#products">
-    <button class="hero-btn">
-        Shop Now
-    </button>
-        </a>
+        </div>
 
-    </div>
+    </section>
+    <!-- PRODUCT SECTION -->
 
-</section>
-<!-- PRODUCT SECTION -->
+    <section class="products" id="products">
 
-<section class="products" id="products">
+        <h2 class="section-title">
+            Featured Products
+        </h2>
 
-    <h2 class="section-title">
-        Featured Products
-    </h2>
+        <!-- LOADING MESSAGE -->
 
-    <div class="product-grid">
+<div class="loading">
+    Loading products...
+</div>
 
-        <!-- Products will come from JavaScript -->
+<!-- ERROR MESSAGE -->
 
-    </div>
+<div class="error-message">
+</div>
 
-</section>
+<!-- PRODUCT GRID -->
+
+<div class="product-grid">
+</div>
+
+    </section>
 
     <!-- JS FILE -->
     <script src="./assets/js/app.js"></script>
 
 </body>
+
 </html>
