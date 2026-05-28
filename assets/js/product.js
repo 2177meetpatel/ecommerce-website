@@ -4,6 +4,8 @@ const params = new URLSearchParams(window.location.search);
 
 const productId = params.get("id");
 
+let currentProduct = null;
+
 /* SELECT CONTAINER */
 
 const productContainer =
@@ -13,13 +15,26 @@ const productContainer =
 
 async function fetchProduct() {
 
+    if (!productId || !productContainer) {
+        if (productContainer) {
+            productContainer.innerHTML = "<h2>Product not found.</h2>";
+        }
+        return;
+    }
+
     try {
 
         const response = await fetch(
             `https://fakestoreapi.com/products/${productId}`
         );
 
+        if (!response.ok) {
+            throw new Error("Product not found.");
+        }
+
         const product = await response.json();
+
+        currentProduct = product;
 
         displayProduct(product);
 
@@ -92,6 +107,11 @@ function displayProduct(product) {
 
 </div>
 
+                <div class="variation">
+                    <label>Quantity:</label>
+                    <input type="number" id="quantity" value="1" min="1" />
+                </div>
+
                 <button 
                     class="hero-btn"
                     onclick="addToCart(${product.id})"
@@ -129,11 +149,17 @@ function addToCart(id) {
             .textContent;
 
     const productPrice =
-        currentPrice;
+        parseFloat(currentProduct?.price) || 0;
 
     const productImage =
         document.querySelector(".product-image img")
             .src;
+
+    const quantity =
+        parseInt(
+            document.querySelector("#quantity").value,
+            10
+        ) || 1;
 
     /* CHECK QUANTITY */
 
@@ -196,8 +222,6 @@ function addToCart(id) {
 
     updateCartCount();
 
-    /* SUCCESS MESSAGE */
-
     showNotification(
         "Item added to cart!"
     );
@@ -237,8 +261,17 @@ function updateCartCount() {
     let cart =
         JSON.parse(localStorage.getItem("cart")) || [];
 
-    document.querySelector(".cart-count")
-        .textContent = cart.length;
+    const totalItems = cart.reduce(
+        (sum, item) => sum + (item.quantity || 0),
+        0
+    );
+
+    const cartCount =
+        document.querySelector(".cart-count");
+
+    if (cartCount) {
+        cartCount.textContent = totalItems;
+    }
 }
 
 /* INITIAL LOAD */

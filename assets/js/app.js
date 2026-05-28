@@ -37,11 +37,33 @@ const loading =
 const errorMessage =
     document.querySelector(".error-message");
 
+const cartCount =
+    document.querySelector(".cart-count");
+
+function updateCartCount() {
+    if (!cartCount) return;
+
+    const cart =
+        JSON.parse(localStorage.getItem("cart"))
+        || [];
+
+    const totalItems = cart.reduce(
+        (sum, item) => sum + (item.quantity || 0),
+        0
+    );
+
+    cartCount.textContent = totalItems;
+}
+
 /* =========================
    FETCH PRODUCTS
 ========================= */
 
 async function fetchProducts() {
+
+    if (!productGrid || !loading || !errorMessage) {
+        return;
+    }
 
     try {
 
@@ -79,8 +101,8 @@ async function fetchProducts() {
 
         displayProducts(products);
 
+        updateCartCount();
     }
-
     catch (error) {
 
         console.log(error);
@@ -161,4 +183,5 @@ function displayProducts(products) {
    INITIALIZE
 ========================= */
 
+updateCartCount();
 fetchProducts();
